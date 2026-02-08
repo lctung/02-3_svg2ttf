@@ -26,7 +26,7 @@ def create_svg_font_with_flip():
     glyph_definitions = []
     svg_files = sorted(list(input_folder.glob("*.svg")))
 
-    # 定義翻轉參數：假設畫布高度為 300
+    # 翻轉參數：畫布高度為 300
     canvas_height = 300
 
     for svg_path in tqdm(svg_files, desc="Merge SVG: "):
@@ -48,12 +48,11 @@ def create_svg_font_with_flip():
             if not raw_d:
                 continue
 
-            # 2. 核心翻轉邏輯：直接修改數值字串
             # 正則表達式抓取指令(字母)與數字
             tokens = re.findall(r"([a-zA-Z])|([-+]?\d*\.\d+|\d+)", raw_d)
             
             new_tokens = []
-            is_x = True # 座標通常成對出現 (X, Y)
+            is_x = True # 座標 (X, Y)
             
             for cmd, val in tokens:
                 if cmd: # 如果是指令 (M, L, C, Z...)
@@ -75,7 +74,7 @@ def create_svg_font_with_flip():
 
             flipped_d = " ".join(new_tokens)
 
-            # 3. 產出 glyph 標籤
+            # 產出 glyph 標籤
             glyph_def = f'    <glyph glyph-name="{glyph_name}"\n' \
                         f'      unicode="{unicode_entity}"\n' \
                         f'      horiz-adv-x="300" d="{flipped_d}" />'
@@ -84,7 +83,6 @@ def create_svg_font_with_flip():
         except Exception as e:
             print(f"Failed to process {svg_path.name}: {e}")
 
-    # 寫入檔案
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(svg_header)
         f.write("\n".join(glyph_definitions))
