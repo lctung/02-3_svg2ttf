@@ -6,9 +6,9 @@ from tqdm import tqdm
 
 def create_svg_font_with_flip():
     font_name = 'MyFont'
-    input_folder = Path('pico_5')
+    input_folder = Path('pico_4808')
     output_dir = Path('final_font')
-    output_path = output_dir / 'fontpico_py2.svg'
+    output_path = output_dir / 'fontpico_4808.svg'
     
     output_dir.mkdir(parents=True, exist_ok=True)
 
